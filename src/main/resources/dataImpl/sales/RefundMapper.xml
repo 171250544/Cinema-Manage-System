@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.data.Refund.RefundMapper">
+    <insert id="insertRefundSchedule" parameterType="com.example.cinema.po.RefundSchedule"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into RefundSchedule(Id,BestTime,BestPercent,MediumTime,MediumPercent,BadTime,BadPercent)
+        values(#{Id}, #{BestTime},#{BestPercent},#{MediumTime},#{MediumPercent},#{BadTime},#{BadPercent})
+    </insert>
+
+    <delete id="deleteRefundSchedule">
+        delete from RefundSchedule where Id=#{Id}
+    </delete>
+
+    <select id="selectAllSchedules" resultMap="RefundSchedule">
+        select * from RefundSchedule
+    </select>
+
+    <select id="selectRefundById" resultMap="RefundSchedule">
+        select * from RefundSchedule where Id=#{Id}
+    </select>
+
+    <resultMap id="RefundSchedule" type="com.example.cinema.po.RefundSchedule">
+        <result column="Id" property="Id"></result>
+        <result column="BestTime" property="BestTime"></result>
+        <result column="BestPercent" property="BestPercent"></result>
+        <result column="MediumTime" property="MediumTime"></result>
+        <result column="MediumPercent" property="MediumPercent"></result>
+        <result column="BadTime" property="BadTime"></result>
+        <result column="BadPercent" property="BadPercent"></result>
+    </resultMap>
+
+</mapper>

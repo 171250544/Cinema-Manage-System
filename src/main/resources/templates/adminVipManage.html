@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/request.js"></script>
+    <script src="/js/adminVipManage.js"></script>
+
+</head>
+<body>
+<div class="main-container">
+    <div class="nav-left-container">
+        <div class="nav-user-container" style="margin-bottom: 50px;">
+            <img class="avatar-lg" src="/images/defaultAvatar.jpg"/>
+            <p class="title">Admin</p>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="/admin/movie/manage"><i class="icon-film"></i> 电影管理</a></li>
+            <li role="presentation"><a href="/admin/session/manage"><i class="icon-calendar"></i> 排片管理</a></li>
+            <li role="presentation"><a href="/admin/promotion/manage"><i class="icon-gift"></i> 活动管理</a></li>
+            <li role="presentation"><a href="#"><i class="icon-cogs"></i> 影院管理</a></li>
+            <li role="presentation"><a href="/admin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
+            <li role="presentation" class="active"><a href="/admin/vip/manage"><i class="icon-bar-chart"></i> 会员管理</a></li>
+            <li role="presentation"><a href="/admin/cinema/coupon"><i class="icon-bar-chart"></i> 优惠券管理</a></li>
+        </ul>
+    </div>
+
+    <div class="content-container">
+        <div class="content-item">
+            <span class="title gray-text">会员卡管理</span>
+            <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#addVipStrategyModal"><i class="icon-plus-sign"></i> 新增会员卡</button>
+
+            <div class="content-vipstrategy">
+                <!--Todo 添加会员卡界面-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addVipStrategyModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="VipstrategyModalLabel">新增会员卡</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="strategy-name-input"><span class="error-text">*</span>会员卡名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="strategy-name-input" placeholder="请输入会员卡名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="strategy-reach-input"><span class="error-text">*</span>需满金额</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="strategy-reach-input" placeholder="请输入需满金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="strategy-minus-input"><span class="error-text">*</span>优惠金额</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="strategy-minus-input" placeholder="请输入优惠金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="strategy-price-input"><span class="error-text">*</span>会员卡价格</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="strategy-price-input" placeholder="请输入会员卡价格">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="add-strategy-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------------------------------------------------------------------------------->
+
+
+<div class="modal fade" id="changeVipStrategyModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addVipStrategyModalLabel">修改会员卡</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="new-strategy-name-input"><span class="error-text">*</span>修改会员卡名称为</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="new-strategy-name-input" placeholder="请输入会员卡名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="new-strategy-reach-input"><span class="error-text">*</span>修改需满金额为</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="new-strategy-reach-input" placeholder="请输入需满金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="new-strategy-minus-input"><span class="error-text">*</span>修改优惠金额为</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="new-strategy-minus-input" placeholder="请输入优惠金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="new-strategy-price-input"><span class="error-text">*</span>修改会员卡价格为</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="new-strategy-price-input" placeholder="请输入会员卡价格">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="change-strategy-form-btn" onclick="changeFunction()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

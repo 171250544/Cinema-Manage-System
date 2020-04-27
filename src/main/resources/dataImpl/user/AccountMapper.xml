@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.data.user.AccountMapper">
+    <insert id="createNewAccount" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,password,role)
+        values(#{username},#{password},"customer")
+    </insert>
+    <select id="getAccountByName" resultMap="User">
+        select * from user where username=#{username}
+    </select>
+    <select id="getAccountByID" resultMap="User">
+        select * from user where id=#{userid}
+    </select>
+
+    <select id="getAllStaff" resultMap="User">
+        select * from user where role &lt;&gt; "customer" and username &lt;&gt; "root"
+    </select>
+
+    <update id="updateStaff" parameterType="com.example.cinema.vo.StaffVO">
+        update user set role = #{role} where username = #{username}
+    </update>
+
+    <update id="deleteStaff" parameterType="com.example.cinema.vo.StaffVO">
+        update user set role = "customer" where id = #{id}
+    </update>
+
+    <resultMap id="User" type="com.example.cinema.po.User">
+    </resultMap>
+</mapper>

@@ -1,0 +1,83 @@
+.cinema-hall-name {
+    font-size: 18px;
+    color: #000;
+}
+
+.cinema-hall-size {
+    font-size: 14px;
+    color: #999;
+}
+
+.cinema-hall-seat {
+    background: url("../images/seat.png");
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px;
+
+    border: none;
+    outline: none;
+}
+
+.cinema-hall-seat-choose {
+    background: url("../images/seatChoose.png");
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px;
+
+    border: none;
+    outline: none;
+}
+
+.cinema-hall-seat-lock {
+    background: url("../images/seatLock.png");
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px;
+
+    border: none;
+    outline: none;
+}
+
+#staffs{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+}
+
+.staff{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.peo, .staff>button{
+    margin: 10px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.315);
+    color: #111;
+}
+
+.peo{
+    width: 100px;
+}
+
+.staff>button{
+    height: 30px;
+}
+
+.MyAnnotation{
+    font-size: 14px;
+    height: 30px;
+    width: 100%;
+    padding: 50 5px;
+}
+
+#add-new-staff{
+    margin-left: 10px;
+}
+

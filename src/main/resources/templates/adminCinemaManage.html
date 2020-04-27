@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>影院管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/cinemaHall.css" />
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/request.js"></script>
+    <script src="/js/adminCinemaManage.js"></script>
+
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="nav-left-container">
+            <div class="nav-user-container" style="margin-bottom: 50px;">
+                <img class="avatar-lg" src="/images/defaultAvatar.jpg" />
+                <p class="title">Admin</p>
+            </div>
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a href="/admin/movie/manage"><i class="icon-film"></i> 电影管理</a></li>
+                <li role="presentation"><a href="/admin/session/manage"><i class="icon-calendar"></i> 排片管理</a></li>
+                <li role="presentation"><a href="/admin/promotion/manage"><i class="icon-gift"></i> 活动管理</a></li>
+                <li role="presentation" class="active"><a href="#"><i class="icon-cogs"></i> 影院管理</a></li>
+                <li role="presentation"><a href="/admin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
+                <li role="presentation"><a href="/admin/vip/manage"><i class="icon-bar-chart"></i> 会员管理</a></li>
+                <li role="presentation"><a href="/admin/cinema/coupon"><i class="icon-bar-chart"></i> 优惠券管理</a></li>
+            </ul>
+        </div>
+        <div class="content-container">
+            <div class="content-item">
+                <span class="title gray-text">常规设置</span>
+                <div class="content-card card">
+                    <span class="">用户可见排片日期：</span><span id="can-see-num"></span>
+                    <a style="margin-left: 20px;" class="primary-text" id="canview-modify-btn">修改</a>
+                    <input type="number" class="form-control" id="canview-set-input"
+                        style="display: none;width: 200px;">
+                    <a style="display: none" class="primary-text" id="canview-confirm-btn">确认</a>
+                </div>
+            </div>
+            <div class="content-item">
+                <span class="title gray-text">影厅管理</span>
+                <div class="content-card card" id="hall-card">
+                </div>
+                <div id='new-div' style='margin-left: 10px'>
+                    <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal"
+                        data-target="#from-add-new-hall">新增影厅</button>
+                    <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal"
+                        data-target="#form-change-hall-info">修改影厅信息</button>
+                </div>
+            </div>
+            <div class="content-item">
+                <span class="title gray-text">角色管理</span>
+                <div class="content-card card" id="staff">
+                    <ul id='staffs'>
+
+                    </ul>
+                </div>
+                <div class="changeDB">
+                    <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#change-staff-info" id="add-new-staff" onclick="removeInfo()">新增职员</button>
+                </div>
+            </div> 
+            <div class="content-item">
+                <span class="title gray-text">退票策略管理</span>
+                <div class="content-card card" id = "refund-table">
+<!--                    js添加-->
+                </div>
+                <div id='refund-btn-div' style='margin-left: 10px'>
+                    <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal"
+                            data-target="#Refund-add-Modal">新增退票策略</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="from-add-new-hall" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增影厅</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="new-hall-name"><span
+                                    class="error-text">*</span>影厅名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new-hall-name" placeholder="请输入影厅名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="new-hall-column"><span
+                                    class="error-text">*</span>排</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new-hall-column" placeholder="请输入排">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="new-hall-row"><span
+                                    class="error-text">*</span>列</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="new-hall-row" placeholder="请输入列">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="add-new-hall-form-btn">确认</button>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="/admin/movie/manage"><i class="icon-film"></i> 电影管理</a></li>
+            <li role="presentation"><a href="/admin/session/manage"><i class="icon-calendar"></i> 排片管理</a></li>
+            <li role="presentation"><a href="/admin/promotion/manage"><i class="icon-gift"></i> 活动管理</a></li>
+            <li role="presentation" class="active"><a href="#"><i class="icon-cogs"></i> 影院管理</a></li>
+            <li role="presentation"><a href="/admin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
+            <li role="presentation"><a href="/admin/vip/manage"><i class="icon-bar-chart"></i> 会员管理</a></li>
+
+            <li role="presentation"><a href="/admin/cinema/coupon"><i class="icon-bar-chart"></i> 优惠券管理</a></li>
+        </ul>
+    </div>
+    <div class="modal fade" id="form-change-hall-info" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改影厅信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="hall-name-select"><span
+                                    class="error-text">*</span>选择影厅</label>
+                            <div class="col-sm-10">
+                                <select id="hall-name-select" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="change-hall-name"><span
+                                    class="error-text"></span>影厅名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="change-hall-name" placeholder="请输入影厅名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="change-hall-column"><span
+                                    class="error-text"></span>排</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="change-hall-column" placeholder="请输入排">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="change-hall-row"><span
+                                    class="error-text"></span>列</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="change-hall-row" placeholder="请输入列">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="change-hall-info-btn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="change-staff-info" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改职员信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><span
+                                    class="error-text">*</span>账号昵称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="change-staff-name" placeholder="请输入账号昵称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="select-role"><span
+                                    class="error-text">*</span>角色信息</label>
+                            <div class="col-sm-10">
+                                <select id="select-role" class="form-control">
+                                    <option value="admin">admin</option>
+                                    <option value="manager">manager</option>
+                                    <option value="seller">seller</option>
+                                    <option value="boss">boss</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="change-staff-info-btn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    管理退票策略界面-->
+    <div class="modal fade" id="Refund-add-Modal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增退票策略</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>最佳时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-BestTime" placeholder="请输入距电影开场最佳剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-BestPercent" placeholder="请输入最佳时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>一般时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-MediumTime" placeholder="请输入距电影开场一般剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-MediumPercent" placeholder="请输入一般时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>最差时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-BadTime" placeholder="请输入距电影开场最差剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-add-BadPercent" placeholder="请输入最差时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class = "MyAnnotation">
+                            <p>若剩余时间少于最差时间则无法退票！</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="add-Refund-btn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Refund-edit-Modal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改退票策略</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>最佳时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-BestTime" placeholder="请输入距电影开场最佳剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-BestPercent" placeholder="请输入最佳时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>一般时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-MediumTime" placeholder="请输入距电影开场一般剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-MediumPercent" placeholder="请输入一般时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>最差时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-BadTime" placeholder="请输入距电影开场最差剩余时间（单位：小时）">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" ><span
+                                    class="error-text">*</span>退钱比例</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="Refund-edit-BadPercent" placeholder="请输入最差时间下的退钱比例（大于0小于1）">
+                            </div>
+                        </div>
+                        <div class = "MyAnnotation">
+                            <p>若剩余时间少于最差时间则无法退票！</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="edit-Refund-Button">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

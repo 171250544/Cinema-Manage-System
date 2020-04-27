@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.data.statistics.StatisticsMapper">
+    <select id="selectMovieScheduleTimes" resultType="com.example.cinema.po.MovieScheduleTime">
+        select movie_id as movieId, count(*) as time,name from
+              (select * from schedule where start_time between #{date} and #{nextDate}) s,
+              movie where s.movie_id = movie.id group by movieId
+    </select>
+
+    <select id="selectMovieTotalBoxOffice" resultType="com.example.cinema.po.MovieTotalBoxOffice">
+        select movie.id as movieId, boxOffice,name from movie
+        left join
+          (select movie_id as movieId,sum(fare) as boxOffice from schedule
+          right join
+          (select schedule_id from ticket where state = 1) t
+          on schedule.id = t.schedule_id group by movie_id) s
+        on s.movieId = movie.id
+        order by boxOffice desc
+    </select>
+
+    <select id="selectAudiencePrice" resultType="com.example.cinema.po.AudiencePrice">
+        select user_id as userId, sum(fare) as totalPrice from schedule right join
+              (select * from ticket where schedule_id in
+              (select id from schedule where start_time between #{date} and #{nextDate}) and state = 1) t
+        on schedule.id = schedule_id group by user_id
+    </select>
+
+    <select id="selectPopularMovieList" resultType="com.example.cinema.vo.PopularMovieVO">
+        select movie.id as movieId, boxOffice,name from movie
+        left join
+          (select movie_id as movieId,sum(fare) as boxOffice from schedule
+          right join
+          (select schedule_id from ticket where state = 1) t
+          on schedule.id = t.schedule_id
+           where start_time between #{date} and #{nextDate}
+           group by movie_id) s
+        on s.movieId = movie.id
+        order by boxOffice desc
+    </select>
+
+    <select id="selectPlacingRate" resultType="com.example.cinema.vo.PlacingRateVO">
+select  movieId,name, audienceNum,seatNumInHalls,schedulesNum,(audienceNum/seatNumInHalls/schedulesNum)as placingRate
+from(
+select  movieId,name,sum(audienceNum1)as audienceNum ,sum(seatNumInHalls1)as seatNumInHalls ,count(distinct scheduleId)as schedulesNum
+ from
+
+(select movie.id as movieId,name,audienceNum1 ,seatNumInHalls1 ,scheduleId from movie
+right join  (select movie_id as movieId,schedule.id as scheduleId ,hall_id as hall from schedule
+where start_time between #{date} and #{nextDate}
+  )s
+on movie.id=s.movieId
+left join (select schedule_id, count(*)as audienceNum1 from ticket group by schedule_id)t
+on t.schedule_id=s.scheduleId
+left join (select hall.id as id ,sum(`column`*row)  as seatNumInHalls1  from hall group by hall.id)h
+          on h.id=s.hall)z group by movieId)r
+
+    </select>
+</mapper>

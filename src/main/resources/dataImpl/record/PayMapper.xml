@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.data.record.PayMapper">
+    <insert id="insertPayRecord" parameterType="com.example.cinema.po.PayRecord"
+            useGeneratedKeys="true" keyProperty="ID">
+        insert into payrecord(use_id,typeOfPay,MoreOfPay,price,dt)
+        values(#{userId}, #{typeOfRecharge},#{moreOfPay},#{price},#{timestamp})
+    </insert>
+
+
+
+
+    <select id="selectPayRecordByUser" resultMap="PayRecord">
+        select * from payrecord where use_id=#{userId}
+    </select>
+
+    <select id="selectUserByTotal" resultType="com.example.cinema.po.PayRecord">
+        select use_id as userID,sum(price) as price from payrecord group by use_id
+    </select>
+
+    <resultMap id="PayRecord" type="com.example.cinema.po.PayRecord">
+        <result column="ID" property="id"></result>
+        <result column="use_id" property="userId"></result>
+        <result column="typeOfPay" property="typeOfRecharge"></result>
+        <result column="price" property="price"></result>
+        <result column="dt" property="timestamp"></result>
+        <result column="MoreOfPay" property="moreOfPay"></result>
+
+    </resultMap>
+
+</mapper>

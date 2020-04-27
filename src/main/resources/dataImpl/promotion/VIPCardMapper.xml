@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.cinema.data.promotion.VIPCardMapper">
+    <insert id="insertOneCard" parameterType="com.example.cinema.po.VIPCard"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into vip_card(user_id,name,balance)
+        values(#{userId}, #{name},#{balance})
+    </insert>
+
+    <select id="selectCardById" resultMap="VIPCard">
+        select * from vip_card where id=#{id}
+    </select>
+
+    <select id="selectCardByUserId" resultMap="VIPCard">
+        select * from vip_card where user_id=#{userId}
+    </select>
+
+    <resultMap id="VIPCard" type="com.example.cinema.po.VIPCard">
+        <result column="join_time" property="joinDate"></result>
+        <result column="id" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="balance" property="balance"></result>
+    </resultMap>
+
+    <update id="updateCardBalance">
+        update vip_card set balance = #{balance} where id=#{id}
+    </update>
+
+    <insert id="insertOneStrategy" parameterType="com.example.cinema.po.VipCardCategory">
+        insert into vipcardcategory(name,reach,minus,price)
+        values(#{name},#{reach}, #{minus},#{price})
+    </insert>
+
+    <select id="selectCategoryByName" resultType="com.example.cinema.po.VipCardCategory">
+        select * from vipcardcategory where name=#{name}
+    </select>
+
+    <select id="selectCategoryByCardId" resultType="com.example.cinema.po.VipCardCategory">
+        select * from vipcardcategory
+        left join (select id,name from vip_card)s
+        on vipcardcategory.category=s.name
+        where s.id=#{cardId}
+    </select>
+
+    <select id="selectAllCategory" resultType="com.example.cinema.po.VipCardCategory">
+        select * from vipcardcategory
+
+    </select>
+
+    <update id="updateCardStrategy">
+        update vipcardcategory set name=#{name},reach  = #{reach},minus=#{minus},price=#{price} where category=#{category}
+    </update>
+
+    <delete id="deleteCardStrategy">
+        delete from vipcardcategory
+        where name=#{nameOfCategory};
+    </delete>
+
+    <delete id="deleteVipCard">
+        delete from vip_card
+        where name=#{nameOfCard};
+    </delete>
+
+    <update id="updateStrategyOfVipCard">
+        update vip_card set name=#{name} where name=#{beforeName}
+    </update>
+</mapper>

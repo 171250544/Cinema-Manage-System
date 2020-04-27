@@ -1,0 +1,114 @@
+body{
+	background: linear-gradient(to bottom right, #1caf9a, #1caaaa);
+}
+
+#main-container {
+	background: url("https://account.talkingdata.com/images/bg-regist.png") top center no-repeat;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: #fff;
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%;
+	-webkit-animation: Gradient 8s ease infinite;
+	-moz-animation: Gradient 8s ease infinite;
+	animation: Gradient 8s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+#login-container {
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 3px;
+	padding: 20px;
+	width: 400px;
+	border-radius: 20px;
+	border: 0.5px solid;
+}
+
+
+#login-form {
+	margin-top: 35px;
+}
+
+.input-interval {
+	margin: 15px 0;
+}
+
+#login-btn{
+	width: 30%;
+	background: none;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 0.5);
+	border-radius: 20px;
+	display: inline-block;
+}
+
+#btn-login{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h3{
+	width: 14%;
+	display: inline-block;
+}
+
+#my-title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-group-addon{
+	/* opacity: 0.5; */
+	background: rgba(255, 255, 255, 0.1) !important;
+	border-radius: 50% !important;
+	margin-right: 50px !important;
+}
+
+#index-name,  #index-name-error, #index-password{
+	margin-left: 5px;
+	border-radius: 20px;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+}
